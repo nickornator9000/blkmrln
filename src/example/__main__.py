@@ -11,7 +11,7 @@ class EntryPoint:
 
 def entrypoint(argv)->None:
     try:
-        opts, args = getopt.getopt(argv, "hlti:", ["help", "logging", "test","input config="])
+        opts, args = getopt.getopt(argv, "hlti:", ["help", "logging", "test","input_config="])
     except getopt.GetoptError as err:
         print(str(err))
         print("\nUsage: python -m example [-h] [-l] [-t] [--input=FILEPATH]")
