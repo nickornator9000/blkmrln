@@ -6,6 +6,7 @@ import yaml
 class BaseConfigManager():
     def __init__(self):
         self._configuration = self.get_config()
+        self._env_configuration = self.get_env_config()
     
     def get_config(self,
                    config_path:None|str=None)->dict:
@@ -28,7 +29,6 @@ class BaseConfigManager():
     def get_logger(self,
                    enabled:bool,
                    name="Default",
-                   level=logging.INFO,
                    console_output=True)->logging.Logger|None:
         """
         Returns a configured logger.
@@ -44,6 +44,7 @@ class BaseConfigManager():
         - None if logging is disabled.
         """
         if enabled:
+            level = self._env_configuration['log']['level']
             logger = logging.getLogger(name)
             logger.setLevel(level)
 
@@ -65,4 +66,7 @@ class BaseConfigManager():
     def get_db_cxn(self,
                    local=True,
                    **kwargs):
+        if local==False:
+            user = self._configuration['db']['user']
+            db_pass = self._configuration['db']['pass']
         return None
