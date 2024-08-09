@@ -51,14 +51,13 @@ class BaseConfigManager():
             # Remove existing handlers
             if logger.hasHandlers():
                 logger.handlers.clear()
-
-            if console_output:
-                # Create console handler
-                ch = logging.StreamHandler()
-                ch.setLevel(level)
-                formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-                ch.setFormatter(formatter)
-                logger.addHandler(ch)
+            
+            # Create console handler
+            ch = logging.StreamHandler()
+            ch.setLevel(level)
+            formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+            ch.setFormatter(formatter)
+            logger.addHandler(ch)
 
             return logger
         return None
