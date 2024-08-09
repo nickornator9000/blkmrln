@@ -7,7 +7,8 @@ class BaseConfigManager():
     def __init__(self):
         self._configuration = self.get_config()
     
-    def get_config(self,config_path:None|str=None)->dict:
+    def get_config(self,
+                   config_path:None|str=None)->dict:
         if config_path==None:
             config_path = Path()\
                 .resolve()\
@@ -24,7 +25,11 @@ class BaseConfigManager():
             env_configuration = yaml.safe_load(file)
         return env_configuration
     
-    def get_logger(self,enabled:bool,name="Default", level=logging.INFO, console_output=True)->logging.Logger|None:
+    def get_logger(self,
+                   enabled:bool,
+                   name="Default",
+                   level=logging.INFO,
+                   console_output=True)->logging.Logger|None:
         """
         Returns a configured logger.
 
@@ -57,5 +62,7 @@ class BaseConfigManager():
             return logger
         return None
     
-    def get_db_cxn(self,**kwargs):
-        pass
+    def get_db_cxn(self,
+                   local=True,
+                   **kwargs):
+        return None

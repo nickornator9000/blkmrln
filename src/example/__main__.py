@@ -36,3 +36,4 @@ if __name__ == "__main__":
     print(program_manager.logger)
     print(program_manager.env_configs)
     print(program_manager.secrets)
+    print(program_manager.db_cxn)
