@@ -23,3 +23,16 @@ class ConfigManager(BaseConfigManager):
             self.secrets = self.get_config(config_path=config_path)
             self.env_configs = self.get_env_config()
             self.db_cxn = self.get_db_cxn(local=local)
+
+    def get_db_cxn(self, local=True, **kwargs):
+        """
+        Morty (You): Ahh jeez Rick I didn't realize you could 
+        override the method so easily
+        Rick: Ooof*burp*fff courssee you cann MooRRRTTYY don't
+        be an id*burp*iootttt
+        """
+        super().get_db_cxn(local, **kwargs)
+        if local==False:
+            user = self._configuration['db']['user']
+            db_pass = self._configuration['db']['pass']
+        return None

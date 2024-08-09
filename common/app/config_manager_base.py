@@ -64,7 +64,4 @@ class BaseConfigManager():
     def get_db_cxn(self,
                    local=True,
                    **kwargs):
-        if local==False:
-            user = self._configuration['db']['user']
-            db_pass = self._configuration['db']['pass']
-        return None
+        pass
