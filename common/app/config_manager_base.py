@@ -28,8 +28,7 @@ class BaseConfigManager():
     
     def get_logger(self,
                    enabled:bool,
-                   name="Default",
-                   console_output=True)->logging.Logger|None:
+                   name="Default")->logging.Logger|None:
         """
         Returns a configured logger.
 
