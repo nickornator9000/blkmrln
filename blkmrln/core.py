@@ -1,5 +1,4 @@
 import os
-import shutil
 import importlib.resources
 import subprocess
 import sys
@@ -10,7 +9,7 @@ class Core:
         self.base_dir = base_dir
         self.project_name = project_name
         self.project_dir = os.path.join(base_dir,project_name)
-        self.env_dir = os.path.join(env_dir,'.venvmanager')
+        self.env_dir = os.path.join(env_dir,f'.venvmanager/{project_name}')
         self.resoures_dir = self.get_resources_directory()
 
         self._requirements_file= os.path.join(self.resoures_dir,'dep/common/requirements.txt')
@@ -85,9 +84,7 @@ class Core:
         """
         Installs dependencies from a requirements file into the virtual environment.
         """
-        if os.name != 'nt':
-            pip_executable = os.path.join(self.env_dir, 'bin', 'pip')
-        pip_executable = os.path.join(self.env_dir, 'Scripts', 'pip')
+        pip_executable = os.path.join(self.env_dir, 'bin', 'pip')
         
         if not os.path.exists(pip_executable):
             raise FileNotFoundError("Pip not found in the virtual environment")
@@ -100,8 +97,6 @@ class Core:
         """
         Prints instructions to activate the virtual environment.
         """
-        if os.name != 'nt':
-            activate_script = os.path.join(self.env_dir, 'bin', 'activate')
-        activate_script = os.path.join(self.env_dir, 'Scripts', 'activate')
+        activate_script = os.path.join(self.env_dir, 'bin', 'activate')
         
         print(f"To activate the virtual environment, run:\nsource {activate_script}")
