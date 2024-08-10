@@ -10,7 +10,7 @@ setup(
     description="A python build tool optimized to setup for projects of any scale using modern python packaging, robust repository standards, and black formatting.",
     author="Nicholas Fulton",
     author_email="nicholasfulton14@gmail.com",
-    packages=find_packages(where="blkmrln.*"),
+    packages=find_packages(),
     install_requires=parse_requirements("dep/common/requirements.txt"),
     classifiers=[
         "Programming Language :: Python :: 3",
