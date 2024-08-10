@@ -8,6 +8,8 @@ def main():
     # Build command
     build_parser = subparsers.add_parser('build', help='Build the project')
     build_parser.add_argument('-n', '--name', required=True, help='Name of the project')
+    build_parser.add_argument('-e', '--env', required=True, help='venvmanager directory path')
+
 
     # Rename command
     rename_parser = subparsers.add_parser('rename', help='Rename the project')

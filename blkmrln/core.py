@@ -1,19 +1,36 @@
 import os
 import shutil
+import importlib.resources
+import subprocess
+import sys
 
 class Core:
 
-    def __init__(self,base_dir,project_name):
+    def __init__(self,base_dir,project_name,env_dir=None):
         self.base_dir = base_dir
         self.project_name = project_name
         self.project_dir = os.path.join(base_dir,project_name)
+        self.env_dir = os.path.join(env_dir,'.venvmanager')
+        self.resoures_dir = self.get_resources_directory()
 
-    def validate_directories(self,source_dirs):
+        self._requirements_file= os.path.join(self.resoures_dir,'dep/common/requirements.txt')
+
+    def get_resources_directory(self):
+        """
+        Get the path to the `resources` directory within the `blkmrln` package.
+        """
+        resources_path = importlib.resources.files('blkmrln').joinpath('resources')
+        
+        return str(resources_path)
+
+    def validate_directories(self):
         """
         Validates that the source directories exist and are directories.
         """
+        source_dirs = ['src','common','config','dep','test']
         invalid_dirs = []
         for source_dir in source_dirs:
+            source_dir = os.path.join(self.project_dir,source_dir)
             if not os.path.exists(source_dir) or not os.path.isdir(source_dir):
                 invalid_dirs.append(source_dir)
         return len(invalid_dirs) == 0, invalid_dirs
@@ -48,10 +65,43 @@ class Core:
         else:
             print(f"Git repository already exists in {self.project_dir}")
 
-    def resources_to_root(self,target_root):
-        if os.path.exists(target_root) and os.path.isdir(target_root):
-            destination = os.path.join(target_root, os.path.basename(target_root))
-            print(f"Copying {target_root} to {destination}")
-            shutil.copytree(target_root, destination, dirs_exist_ok=True)
+    def create_virtual_environment(self):
+        """
+        Creates a virtual environment in the specified directory.
+        """
+        if not os.path.exists(self.env_dir):
+            print(f"Creating virtual environment at {self.env_dir}...")
+            os.makedirs(self.env_dir, exist_ok=True)
+            
+            # Create the virtual environment
+            subprocess.check_call([sys.executable, '-m', 'venv', self.env_dir])
+            print(f"Virtual environment created at {self.env_dir}")
         else:
-            print(f"Skipping {target_root}: Directory does not exist or is not a directory")
+            print(f"Virtual environment already exists at {self.env_dir}")
+        
+        return self.env_dir
+
+    def install_requirements(self):
+        """
+        Installs dependencies from a requirements file into the virtual environment.
+        """
+        if os.name != 'nt':
+            pip_executable = os.path.join(self.env_dir, 'bin', 'pip')
+        pip_executable = os.path.join(self.env_dir, 'Scripts', 'pip')
+        
+        if not os.path.exists(pip_executable):
+            raise FileNotFoundError("Pip not found in the virtual environment")
+        
+        # Install dependencies
+        subprocess.check_call([pip_executable, 'install', '-r', self._requirements_file])
+        print("Dependencies installed.")
+
+    def activate_virtual_environment(self):
+        """
+        Prints instructions to activate the virtual environment.
+        """
+        if os.name != 'nt':
+            activate_script = os.path.join(self.env_dir, 'bin', 'activate')
+        activate_script = os.path.join(self.env_dir, 'Scripts', 'activate')
+        
+        print(f"To activate the virtual environment, run:\nsource {activate_script}")

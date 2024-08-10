@@ -1,28 +1,29 @@
 import os
 from ..utils import copy_directory_contents
 from ..core import Core
-import importlib.resources
-
-def get_resources_directory():
-    """
-    Get the path to the `resources` directory within the `my_tool` package.
-    """
-    resources_path = importlib.resources.files('blkmrln').joinpath('resources')
-    
-    return str(resources_path)
 
 def execute(args):
+    """
+    \nCreate directory structure of project
+    \nCreate venv entry for project in venvmanager
+    """
     project_name = args.name
-    if project_name == None:
-        project_name = 'example'
+    env_dir = args.env
     print(f"Building Project: {project_name}")
     target_root = os.path.join(os.getcwd(), project_name)
     print(f"ROOT DIR = {target_root}")
-    pm = Core(project_name=project_name,base_dir=os.getcwd())
+    pm = Core(project_name=project_name,
+              base_dir=os.getcwd(),
+              env_dir=env_dir)
     pm.setup_project_structure()
     
-    source_dir = get_resources_directory()
+    source_dir = pm.get_resources_directory()
     print(f"Setting up project directories in {target_root}")
     copy_directory_contents(source_dir, target_root)
-
-    print(f"Copying {project_name} Build files to {target_root}")
+    print(f"Validating project directories in {target_root}")
+    print(pm.validate_directories())
+    print(f"Creating venv for project & installing dependencies")
+    pm.create_virtual_environment()
+    pm.install_requirements()
+    print(f"Activating venv {project_name}")
+    pm.activate_virtual_environment()
