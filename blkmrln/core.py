@@ -98,5 +98,6 @@ class Core:
         Prints instructions to activate the virtual environment.
         """
         activate_script = os.path.join(self.env_dir, 'bin', 'activate')
-        
-        print(f"To activate the virtual environment, run:\nsource {activate_script}")
+        subprocess.check_call(['source',activate_script])
+        subprocess.check_call(['cd',self.project_dir])
+        #print(f"To activate the virtual environment, run:\nsource {activate_script}")

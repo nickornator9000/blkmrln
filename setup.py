@@ -22,4 +22,5 @@ setup(
             'blkmrln=blkmrln.cli:main',
         ],
     },
+    include_package_data=True
 )

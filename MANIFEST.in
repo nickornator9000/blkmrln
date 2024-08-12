@@ -1,1 +1,1 @@
-include blkmrln/resources/config/*.yaml
+recursive-include blkmrln/resources *
