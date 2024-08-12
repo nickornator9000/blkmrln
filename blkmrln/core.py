@@ -2,7 +2,7 @@ import os
 import importlib.resources
 import subprocess
 import sys
-
+from pathlib import Path
 class Core:
 
     def __init__(self,base_dir,project_name,env_dir=None):
@@ -98,6 +98,16 @@ class Core:
         Prints instructions to activate the virtual environment.
         """
         activate_script = os.path.join(self.env_dir, 'bin', 'activate')
-        subprocess.check_call(['source',activate_script])
-        subprocess.check_call(['cd',self.project_dir])
-        #print(f"To activate the virtual environment, run:\nsource {activate_script}")
+        script = f"source {activate_script} && cd {self.project_dir}"
+        # Locate the site-packages directory within the virtual environment
+        site_packages_dir = os.path.join(self.env_dir, 'lib', f'python{sys.version_info.major}.{sys.version_info.minor}', 'site-packages')
+
+        # Create the .pth file in the site-packages directory
+        pth_file_path = os.path.join(site_packages_dir, 'project_directory.pth')
+        with open(pth_file_path, 'w') as pth_file:
+            pth_file.write(self.project_dir + '\n')
+            pth_file.write(f"{self.project_dir}/src" + '\n')
+            pth_file.write(f"{self.project_dir}/test" + '\n')
+        print(f"Created .pth file at: {pth_file_path}")
+        print(f"Added {self.project_dir} to Python path.")
+        print(f"To activate the virtual environment and use the project directory, run:\n{script}")
