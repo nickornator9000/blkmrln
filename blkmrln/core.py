@@ -37,7 +37,7 @@ class Core:
         # Persist the class object by pickling
         with open(f'myclass.pkl', 'wb') as f:
             pickle.dump(self, f)
-        print("Exiting context and pickling class object.")
+        print("Exiting context and pickling build object.")
         return False
 
     def get_resources_directory(self):
