@@ -2,17 +2,43 @@ import os
 import importlib.resources
 import subprocess
 import sys
-from pathlib import Path
+import pickle
+
 class Core:
 
-    def __init__(self,base_dir,project_name,env_dir=None):
+    def __init__(self,base_dir,project_name,env_dir):
         self.base_dir = base_dir
         self.project_name = project_name
-        self.project_dir = os.path.join(base_dir,project_name)
         self.env_dir = os.path.join(env_dir,f'.venvmanager/{project_name}')
-        self.resoures_dir = self.get_resources_directory()
+        
 
-        self._requirements_file= os.path.join(self.resoures_dir,'dep/common/requirements.txt')
+    def __enter__(self):
+        # Check if the pickle file exists
+        if os.path.exists(f'myclass.pkl'):
+            # Load the object from the pickle file
+            with open(f'myclass.pkl', 'rb') as f:
+                loaded_obj = pickle.load(f)
+                self.base_dir = loaded_obj.base_dir
+                self.project_name = loaded_obj.project_name
+                self.project_dir = loaded_obj.project_dir
+                self.env_dir = loaded_obj.env_dir
+                self.resources_dir = loaded_obj.resources_dir
+                self._requirements_file = loaded_obj._requirements_file
+            print("Pickle found. Loading state from pickle.")
+        else:
+            # Initialize or modify class variables if no pickle exists
+            self.resources_dir = self.get_resources_directory()
+            self.project_dir = os.path.join(self.base_dir,self.project_name)
+            self._requirements_file= os.path.join(self.resources_dir,'dep/common/requirements.txt')
+            print("No pickle found. Initialized new state.")
+        return self  # Return the object itself
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        # Persist the class object by pickling
+        with open(f'myclass.pkl', 'wb') as f:
+            pickle.dump(self, f)
+        print("Exiting context and pickling class object.")
+        return False
 
     def get_resources_directory(self):
         """
@@ -110,4 +136,4 @@ class Core:
             pth_file.write(f"{self.project_dir}/test" + '\n')
         print(f"Created .pth file at: {pth_file_path}")
         print(f"Added {self.project_dir} to Python path.")
-        print(f"To activate the virtual environment and use the project directory, run:\n{script}")
+        print(f"\n\nTo activate the virtual environment and use the project directory, run:\n{script}")

@@ -1,5 +1,5 @@
 import argparse
-from .commands import build
+from .commands import build, venvmanager
 
 def main():
     parser = argparse.ArgumentParser(description="BLKMRLN CLI")
@@ -11,10 +11,10 @@ def main():
     build_parser.add_argument('-e', '--env', required=True, help='venvmanager directory path')
 
 
-    # Rename command
-    rename_parser = subparsers.add_parser('rename', help='Rename the project')
-    rename_parser.add_argument('-n', '--name', required=True, help='Name of the project')
-    rename_parser.add_argument('-r', '--newname', required=True, help='New name of the project')
+    # VenvManager command
+    rename_parser = subparsers.add_parser('venvmanager', help='Manage Virtual Environments')
+    rename_parser.add_argument('-p', '--project', required=False, help='Name of the project')
+    rename_parser.add_argument('-d', '--dep_flag', action='store_true', help='Flag to include dep')
 
     #Test command
     test_parser = subparsers.add_parser('test', help='Test the project')
@@ -25,6 +25,8 @@ def main():
 
     if args.command == 'build':
         build.execute(args)
+    elif args.command == 'venvmanager':
+        venvmanager.execute(args)
 
 if __name__ == "__main__":
     main()
