@@ -24,7 +24,7 @@ class Core:
                 self.env_dir = loaded_obj.env_dir
                 self.resources_dir = loaded_obj.resources_dir
                 self._requirements_file = loaded_obj._requirements_file
-            print("Pickle found. Loading state from pickle.")
+            print("Pickle found. Loading state from build object.")
         else:
             # Initialize or modify class variables if no pickle exists
             self.resources_dir = self.get_resources_directory()
