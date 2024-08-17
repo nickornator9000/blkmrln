@@ -25,5 +25,7 @@ def execute(args):
         print(f"Creating venv for project & installing dependencies")
         pm.create_virtual_environment()
         pm.install_requirements()
+        print("Displaying State of Current Build")
+        print(pm.__str__())
         print(f"Activating venv {project_name}")
         pm.activate_virtual_environment()

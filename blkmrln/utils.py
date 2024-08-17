@@ -1,6 +1,13 @@
 import shutil
 import os
 
+class Singleton(type):
+    _instances = {}
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
+        return cls._instances[cls]
+
 def copy_directory_contents(src_dir, dst_dir, overwrite=False):
     """
     Copies the contents of one directory to another.

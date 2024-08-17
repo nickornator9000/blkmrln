@@ -26,3 +26,9 @@ NOTE
 This command is meant to show the user their projects not create or 
 destroy projects that is soley up to the build command. 
 """
+from ..core import Core
+class Project(Core):
+    pass
+
+def execute(args):
+    pass

@@ -29,7 +29,7 @@ from functools import reduce
 
 class VenvManager(Core):
     def __init__(self,project_name):
-        self.project_name=project_name     
+        super().__init__(project_name=project_name)  
 
     def __str__(self) -> str:
         string_out = "\n\nVenvManager: Listing current project environments."
@@ -42,7 +42,7 @@ class VenvManager(Core):
             
         return string_out +"\n\n"
 
-class VenvDepFlag(VenvManager):
+class VenvDepManager(VenvManager):
     def __init__(self,project_name):
         super().__init__(project_name)
 
@@ -56,7 +56,7 @@ def execute(args):
     project_name = args.project
     dep_flag = args.dep_flag
     if dep_flag:
-        with VenvDepFlag(project_name) as vm:
+        with VenvDepManager(project_name) as vm:
             print(vm.__str__())
         return
     with VenvManager(project_name) as vm:

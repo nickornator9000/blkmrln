@@ -9,3 +9,10 @@ NOTE: Feature should match the current project directory by default
 and should also have the option for a project name flag to override this
 default. 
 """
+from .project import Project
+
+class Feature(Project):
+    pass
+
+def execute(args):
+    pass

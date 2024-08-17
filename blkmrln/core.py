@@ -6,7 +6,7 @@ import pickle
 
 class Core:
 
-    def __init__(self,base_dir,project_name,env_dir):
+    def __init__(self,project_name,base_dir=os.getcwd(),env_dir=os.getcwd()):
         self.base_dir = base_dir
         self.project_name = project_name
         self.env_dir = os.path.join(env_dir,f'.venvmanager/{project_name}')
@@ -14,9 +14,9 @@ class Core:
 
     def __enter__(self):
         # Check if the pickle file exists
-        if os.path.exists(f'myclass.pkl'):
+        try:
             # Load the object from the pickle file
-            with open(f'myclass.pkl', 'rb') as f:
+            with open(f'build/build_object.pkl', 'rb') as f:
                 loaded_obj = pickle.load(f)
                 self.base_dir = loaded_obj.base_dir
                 self.project_name = loaded_obj.project_name
@@ -24,21 +24,33 @@ class Core:
                 self.env_dir = loaded_obj.env_dir
                 self.resources_dir = loaded_obj.resources_dir
                 self._requirements_file = loaded_obj._requirements_file
+                self.build_object = loaded_obj.build_object
             print("Pickle found. Loading state from build object.")
-        else:
+        except FileNotFoundError:
             # Initialize or modify class variables if no pickle exists
             self.resources_dir = self.get_resources_directory()
             self.project_dir = os.path.join(self.base_dir,self.project_name)
             self._requirements_file= os.path.join(self.resources_dir,'dep/common/requirements.txt')
+            self.build_object = os.path.join(self.project_dir,'build/build_object.pkl')
             print("No pickle found. Initialized new state.")
         return self  # Return the object itself
 
     def __exit__(self, exc_type, exc_val, exc_tb):
+        
         # Persist the class object by pickling
-        with open(f'myclass.pkl', 'wb') as f:
+        
+        with open(self.build_object, 'wb') as f:
             pickle.dump(self, f)
         print("Exiting context and pickling build object.")
         return False
+    
+    def __str__(self):
+        return f"\nBuild State:\n"+\
+               f"\n\tBase Directory:\t\t{self.base_dir}\n"+\
+               f"\n\tProject Name:\t\t{self.project_name}\n"+\
+               f"\n\tProject Directory:\t{self.project_dir}\n"+\
+               f"\n\tEnvironment Directory:\t{self.env_dir}\n"+\
+               f"\n\tBuild Object:\t\t{self.build_object}\n"
 
     def get_resources_directory(self):
         """
@@ -136,4 +148,4 @@ class Core:
             pth_file.write(f"{self.project_dir}/test" + '\n')
         print(f"Created .pth file at: {pth_file_path}")
         print(f"Added {self.project_dir} to Python path.")
-        print(f"\n\nTo activate the virtual environment and use the project directory, run:\n{script}")
+        print(f"\nTo activate the virtual environment and use the project directory, run:\n{script}")

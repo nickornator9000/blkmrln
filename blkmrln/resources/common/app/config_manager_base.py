@@ -3,10 +3,16 @@ from pathlib import Path
 import logging
 import yaml
 
-class BaseConfigManager():
+class Singleton(type):
+    _instances = {}
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
+        return cls._instances[cls]
+
+class BaseConfigManager(object):
     def __init__(self):
         self._configuration = self.get_config()
-        self._env_configuration = self.get_env_config()
     
     def get_config(self,
                    config_path:None|str=None)->dict:
@@ -17,14 +23,6 @@ class BaseConfigManager():
         with open(config_path, 'r') as file:
             configuration = yaml.safe_load(file)
         return configuration
-    
-    def get_env_config(self)->dict:
-        config_path = Path()\
-            .resolve()\
-            / 'config' / environ['PROJECT_NAME'] / 'env_config.yaml'
-        with open(config_path, 'r') as file:
-            env_configuration = yaml.safe_load(file)
-        return env_configuration
     
     def get_logger(self,
                    enabled:bool,

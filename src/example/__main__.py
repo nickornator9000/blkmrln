@@ -34,6 +34,5 @@ if __name__ == "__main__":
     entrypoint(sys.argv[1:])
     program_manager = ConfigManager(settings.logging_enabled,settings.local,settings.config_path)
     print(program_manager.logger)
-    print(program_manager.env_configs)
     print(program_manager.secrets)
     print(program_manager.db_cxn)
