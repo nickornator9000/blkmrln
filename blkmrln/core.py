@@ -25,6 +25,7 @@ class Core:
                 self.resources_dir = loaded_obj.resources_dir
                 self._requirements_file = loaded_obj._requirements_file
                 self.build_object = loaded_obj.build_object
+                self.rebuild = True
             print("Pickle found. Loading state from build object.")
         except FileNotFoundError:
             # Initialize or modify class variables if no pickle exists
@@ -32,6 +33,7 @@ class Core:
             self.project_dir = os.path.join(self.base_dir,self.project_name)
             self._requirements_file= os.path.join(self.resources_dir,'dep/common/requirements.txt')
             self.build_object = os.path.join(self.project_dir,'build/build_object.pkl')
+            self.rebuild=False
             print("No pickle found. Initialized new state.")
         return self  # Return the object itself
 

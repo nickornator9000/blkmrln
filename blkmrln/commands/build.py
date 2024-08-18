@@ -15,15 +15,17 @@ def execute(args):
     with Core(project_name=project_name,
               base_dir=os.getcwd(),
               env_dir=env_dir) as pm:
-        pm.setup_project_structure()
-        
-        source_dir = pm.get_resources_directory()
-        print(f"Setting up project directories in {target_root}")
-        copy_directory_contents(source_dir, target_root)
-        print(f"Validating project directories in {target_root}")
-        print(pm.validate_directories())
-        print(f"Creating venv for project & installing dependencies")
-        pm.create_virtual_environment()
+        rebuild = pm.rebuild
+        if rebuild==False:
+            pm.setup_project_structure()
+            
+            source_dir = pm.get_resources_directory()
+            print(f"Setting up project directories in {target_root}")
+            copy_directory_contents(source_dir, target_root)
+            print(f"Validating project directories in {target_root}")
+            print(pm.validate_directories())
+            print(f"Creating venv for project & installing dependencies")
+            pm.create_virtual_environment()
         pm.install_requirements()
         print("Displaying State of Current Build")
         print(pm.__str__())
