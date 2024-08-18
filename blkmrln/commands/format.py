@@ -12,19 +12,15 @@ The default project selection should be the current directory IF the current
 directory is a project directory. Otherwise this command should require the 
 user to provide a project name via opt. 
 """
-from .project import Project
-from .feature import Feature
-from ..utils import Singleton
+from ..core import Core
 
-class ProjectFormatState(Project):
+class Format(Core):
     pass
 
-class FeatureFormatState(Feature):
+class FormatProject(Format):
     pass
 
-class FormatState(ProjectFormatState,
-                  FeatureFormatState,
-                  metaclass=Singleton):
+class FormatFeature(FormatProject):
     pass
 
 def run_formatter():

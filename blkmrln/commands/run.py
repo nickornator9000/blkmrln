@@ -1,6 +1,6 @@
 from ..core import Core
 
-class RunState(Core):
+class Run(Core):
     pass
 
 def execute(args):

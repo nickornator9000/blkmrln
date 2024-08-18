@@ -1,14 +1,12 @@
 from ..core import Core
-from ..utils import Singleton
-class ProjectTestState(Core):
+
+class Test(Core):
     pass
 
-class FeatureTestState(ProjectTestState):
+class TestProject(Test):
     pass
 
-class TestState(ProjectTestState,
-                FeatureTestState,
-                metaclass=Singleton):
+class TestFeature(TestProject):
     pass
 
 def run_tests():
