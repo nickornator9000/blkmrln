@@ -12,7 +12,24 @@ default.
 from .project import Project
 
 class Feature(Project):
-    pass
+
+    def __init__(self,
+                 feature_name:str,
+                 custom_dep:bool):
+        self.feature_name = feature_name
+        self.custom_dep = custom_dep
+
+    def create_feature(self):
+        pass
+
+    def delete_feature(self):
+        pass
+
+    def show_feature_changes(self):
+        pass
+
+    def show_feature_test_coverage(self):
+        pass
 
 def execute(args):
     pass

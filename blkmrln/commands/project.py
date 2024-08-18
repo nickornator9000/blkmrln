@@ -28,7 +28,22 @@ destroy projects that is soley up to the build command.
 """
 from ..core import Core
 class Project(Core):
-    pass
+    def __init__(self):
+        super().__init__()
+        self.project_features = self.get_project_features()
+        self.project_feature_count = len(self.project_features)
+
+    def get_project_features(self)->list:
+        pass
+
+    def list_projects(self)->None:
+        pass
+
+    def list_projects_and_features(self)->None:
+        pass
+
+    def list_current_project_and_features(self)->None:
+        pass
 
 def execute(args):
     pass
