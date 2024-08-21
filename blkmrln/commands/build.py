@@ -1,6 +1,6 @@
 import os
 from ..utils import copy_directory_contents
-from ..core import Core
+from ..core import MinifiedBuild
 
 def execute(args):
     """
@@ -12,9 +12,9 @@ def execute(args):
     print(f"Building Project: {project_name}")
     target_root = os.path.join(os.getcwd(), project_name)
     print(f"ROOT DIR = {target_root}")
-    with Core(project_name=project_name,
-              base_dir=os.getcwd(),
-              env_dir=env_dir) as pm:
+    with MinifiedBuild(project_name=project_name,
+                       base_dir=os.getcwd(),
+                       env_dir=env_dir) as pm:
         rebuild = pm.rebuild
         if rebuild==False:
             pm.setup_project_structure()
