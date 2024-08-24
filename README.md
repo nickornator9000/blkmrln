@@ -15,7 +15,12 @@
  Other commands are still in active development, but you can see the architectural outline for each command with the /blkmrln folder or within their respective source folder.  
 
  ### Media
- 
+
+ #### Basic Commands Outside of Project Folder
+ ![Basic Commands Outside of Project Folder](https://github.com/nickornator9000/blkmrln/blob/9ff534d352e3dda014e61928e54bd40e552507df/media/Basic%20Commands.png)
+
+#### Basic Commands Inside of Project Folder
+  ![Basic Commands Inside of Project Folder](https://github.com/nickornator9000/blkmrln/blob/9ff534d352e3dda014e61928e54bd40e552507df/media/Basic%20Commands%20Project%20Context.png)
 
 ## Developing the package
 If you would like to develop the package please follow the outlined procedure and ensure that you read all steps before starting:
