@@ -14,6 +14,9 @@
 
  Other commands are still in active development, but you can see the architectural outline for each command with the /blkmrln folder or within their respective source folder.  
 
+ ### Media
+ 
+
 ## Developing the package
 If you would like to develop the package please follow the outlined procedure and ensure that you read all steps before starting:
 1. Fork the Repository: The contributor creates a personal copy (fork) of the original repository (often called the "upstream" repository) in their GitHub account or another platform. This gives them their own version of the project to work on.
