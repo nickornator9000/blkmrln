@@ -12,6 +12,8 @@ setup(
     author_email="nicholasfulton14@gmail.com",
     packages=find_packages(),
     install_requires=parse_requirements("dep/common/requirements.txt"),
+    url="https://github.com/nickornator9000/blkmrln",
+    icense="Apache-2.0",
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: Apache-2.0",
