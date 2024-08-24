@@ -37,3 +37,11 @@ Please note that all changes must first be done in the /src folder of the reposi
 8. If the change is approved, you will take the code that you have written in the respective /src folder and implement it within your forked repo in the necessary file within the "blkmrln" package directory. Write the necessary integration tests to prove that your change does not break the package and then repeat steps 6 and 7. 
 9. Once integration testing is done and approved the change will be merged into the package. 
 
+## Architecture & Class Structure
+### Media
+
+#### Architecture
+![Architecture](https://github.com/nickornator9000/blkmrln/blob/cac201426938922a6c9117252e4046bfae4a0ec2/media/Architecture.png)
+
+#### Inheritance Model
+![Basic Commands Inside of Project Folder](https://github.com/nickornator9000/blkmrln/blob/cac201426938922a6c9117252e4046bfae4a0ec2/media/Inheritance%20Model.png)
