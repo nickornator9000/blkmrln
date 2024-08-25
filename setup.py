@@ -16,7 +16,7 @@ setup(
     icense="Apache-2.0",
     classifiers=[
         "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: Apache-2.0",
+        "License :: OSI Approved :: Apache Software License",
         "Operating System :: OS Independent",
     ],
     entry_points={
